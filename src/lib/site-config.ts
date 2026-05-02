@@ -1,6 +1,41 @@
+export type BrandVibe = 'luxury' | 'blue_collar' | 'family' | 'corporate' | 'modern'
+export type TrustBadgeId = 'google_reviews' | 'yelp' | 'bbb' | 'home_advisor' | 'angi'
+
 export interface SiteService { name: string; description: string }
 
-export interface SiteTestimonial { quote: string; author: string; location?: string }
+export interface SiteServiceCategory {
+  category: string
+  tasks: string[]
+}
+
+export interface SiteTestimonial {
+  quote: string
+  author: string
+  location?: string
+  rating?: 1 | 2 | 3 | 4 | 5
+}
+
+export interface HoursOfOperation {
+  weekdays: string
+  saturday: string
+  sunday: string
+  emergency: string
+}
+
+export interface SocialLinks {
+  facebook?: string
+  instagram?: string
+  nextdoor?: string
+  twitter?: string
+  tiktok?: string
+  youtube?: string
+}
+
+export interface BrandColors {
+  primary: string
+  accent: string
+  secondary?: string
+}
 
 export interface SiteConfig {
   business_name: string
@@ -18,10 +53,32 @@ export interface SiteConfig {
   service_areas: string[]
   why_choose_us: string[]
   testimonials: SiteTestimonial[]
-  brand_colors: { primary: string; accent: string }
+  brand_colors: BrandColors
+  tagline?: string
+  primary_cta_text?: string
+  brand_vibe?: BrandVibe
+  imagery_style?: string
+  hero_image_description?: string
+  origin_story?: string
+  credentials?: string[]
+  service_categories?: SiteServiceCategory[]
+  trust_badges?: TrustBadgeId[]
+  hours_of_operation?: HoursOfOperation
+  social_links?: SocialLinks
+  license_numbers?: string
 }
 
 export type TemplateVariant = 'classic' | 'modern' | 'bold'
+
+export const TRUST_BADGE_LABELS: Record<TrustBadgeId, string> = {
+  google_reviews: 'Google Reviews',
+  yelp: 'Yelp',
+  bbb: 'BBB',
+  home_advisor: 'HomeAdvisor',
+  angi: 'Angi',
+}
+
+export const CTA_DEFAULT = 'Get a Free Quote'
 
 export function getSiteConfig(): SiteConfig {
   const raw = process.env.NEXT_PUBLIC_SITE_CONFIG
