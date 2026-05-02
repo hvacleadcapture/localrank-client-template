@@ -66,6 +66,7 @@ export interface SiteConfig {
   hours_of_operation?: HoursOfOperation
   social_links?: SocialLinks
   license_numbers?: string
+  favicon_url?: string | null
 }
 
 export type TemplateVariant = 'classic' | 'modern' | 'bold'

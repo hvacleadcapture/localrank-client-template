@@ -6,12 +6,16 @@ export function generateMetadata(): Metadata {
   const c = getSiteConfig()
   const title = `${c.business_name} — ${c.industry} in ${c.city}${c.state ? ', ' + c.state : ''}`
   const description = c.hero_subhead
-  return {
+  const meta: Metadata = {
     title,
     description,
     openGraph: { title, description, type: 'website' },
     twitter: { card: 'summary_large_image', title, description },
   }
+  if (c.favicon_url) {
+    meta.icons = { icon: c.favicon_url }
+  }
+  return meta
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
