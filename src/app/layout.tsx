@@ -1,19 +1,23 @@
-import type { Metadata } from "next"
-import "./globals.css"
+import type { Metadata } from 'next'
+import './globals.css'
+import { getSiteConfig } from '@/lib/site-config'
 
-const biz = process.env.NEXT_PUBLIC_BUSINESS_NAME ?? "Local Business"
-const city = process.env.NEXT_PUBLIC_CITY ?? ""
-const ind = process.env.NEXT_PUBLIC_INDUSTRY ?? "Home Services"
-
-export const metadata: Metadata = {
-  title: biz + " | " + ind + " in " + city,
-  description: "Professional " + ind.toLowerCase() + " services in " + city + ". Call us today.",
+export function generateMetadata(): Metadata {
+  const c = getSiteConfig()
+  const title = `${c.business_name} — ${c.industry} in ${c.city}${c.state ? ', ' + c.state : ''}`
+  const description = c.hero_subhead
+  return {
+    title,
+    description,
+    openGraph: { title, description, type: 'website' },
+    twitter: { card: 'summary_large_image', title, description },
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900 antialiased">{children}</body>
+      <body>{children}</body>
     </html>
   )
 }
