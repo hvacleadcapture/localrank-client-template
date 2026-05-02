@@ -19,8 +19,18 @@ export function generateMetadata(): Metadata {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const config = getSiteConfig()
+
   return (
     <html lang="en">
+      <head>
+        {config.schema_jsonld && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: config.schema_jsonld }}
+          />
+        )}
+      </head>
       <body>{children}</body>
     </html>
   )

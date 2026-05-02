@@ -67,6 +67,7 @@ export interface SiteConfig {
   social_links?: SocialLinks
   license_numbers?: string
   favicon_url?: string | null
+  schema_jsonld?: string
 }
 
 export type TemplateVariant = 'classic' | 'modern' | 'bold'
