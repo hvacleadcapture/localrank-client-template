@@ -20,7 +20,10 @@ export default function ModernLayout({ config }: { config: SiteConfig }) {
             <p className="font-bold tracking-tight leading-tight">{config.business_name}</p>
             {config.tagline && <p className="text-xs text-gray-500 mt-0.5">{config.tagline}</p>}
           </div>
-          {config.phone && <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} className="text-sm font-semibold" style={{ color: primary }}>{config.phone}</a>}
+          <div className="flex items-center gap-5">
+            <a href="/blog" className="text-sm font-medium text-gray-700 hover:text-gray-900 tracking-tight">Tips & Guides</a>
+            {config.phone && <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} className="text-sm font-semibold" style={{ color: primary }}>{config.phone}</a>}
+          </div>
         </div>
       </header>
 
@@ -182,6 +185,7 @@ export default function ModernLayout({ config }: { config: SiteConfig }) {
           {config.phone && <p>{config.phone}</p>}
           <p>{config.city}{config.state ? `, ${config.state}` : ''} · Licensed & Insured</p>
           {config.license_numbers && <p className="text-xs text-gray-400">License: {config.license_numbers}</p>}
+          <p className="pt-2"><a href="/blog" className="text-xs font-medium text-gray-600 hover:text-gray-900">Tips & Guides</a></p>
           {hasSocial && (
             <div className="flex gap-4 justify-center pt-3">
               {Object.entries(config.social_links!).map(([k, v]) => v && (

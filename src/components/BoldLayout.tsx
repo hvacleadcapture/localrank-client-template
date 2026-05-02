@@ -27,11 +27,14 @@ export default function BoldLayout({ config }: { config: SiteConfig }) {
             <p className="font-black tracking-tight uppercase leading-none">{config.business_name}</p>
             {config.tagline && <p className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{config.tagline}</p>}
           </div>
-          {config.phone && (
-            <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} style={{ backgroundColor: accent }} className="text-sm font-bold px-4 py-2 rounded text-black">
-              {config.phone}
-            </a>
-          )}
+          <div className="flex items-center gap-5">
+            <a href="/blog" className="text-xs font-black uppercase tracking-widest text-white/80 hover:text-white">Tips & Guides</a>
+            {config.phone && (
+              <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} style={{ backgroundColor: accent }} className="text-sm font-bold px-4 py-2 rounded text-black">
+                {config.phone}
+              </a>
+            )}
+          </div>
         </div>
       </header>
 
@@ -197,6 +200,7 @@ export default function BoldLayout({ config }: { config: SiteConfig }) {
           {config.phone && <p>{config.phone}</p>}
           <p>{config.city}{config.state ? `, ${config.state}` : ''} · Licensed & Insured</p>
           {config.license_numbers && <p className="text-xs text-white/50 uppercase tracking-wider">License: {config.license_numbers}</p>}
+          <p className="pt-2"><a href="/blog" className="text-xs font-black uppercase tracking-widest text-white/70 hover:text-white">Tips & Guides</a></p>
           {hasSocial && (
             <div className="flex gap-4 justify-center pt-3">
               {Object.entries(config.social_links!).map(([k, v]) => v && (

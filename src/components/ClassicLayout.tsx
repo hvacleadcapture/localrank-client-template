@@ -20,7 +20,10 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
             <p className="font-bold text-lg leading-tight">{config.business_name}</p>
             {config.tagline && <p className="text-xs opacity-80 mt-0.5">{config.tagline}</p>}
           </div>
-          {config.phone && <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} className="text-sm font-semibold hover:underline">{config.phone}</a>}
+          <div className="flex items-center gap-5">
+            <a href="/blog" className="text-sm font-semibold text-white/90 hover:text-white">Tips & Guides</a>
+            {config.phone && <a href={`tel:${config.phone.replace(/[^0-9+]/g, '')}`} className="text-sm font-semibold hover:underline">{config.phone}</a>}
+          </div>
         </div>
       </header>
 
@@ -183,6 +186,7 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
           {config.address && <p>{config.address}</p>}
           <p className="text-gray-500">{config.city}{config.state ? `, ${config.state}` : ''} · Licensed & Insured</p>
           {config.license_numbers && <p className="text-gray-500 text-xs">License: {config.license_numbers}</p>}
+          <p className="pt-2"><a href="/blog" className="text-gray-400 hover:text-white text-xs font-semibold">Tips & Guides</a></p>
           {hasSocial && (
             <div className="flex gap-4 justify-center pt-3">
               {Object.entries(config.social_links!).map(([k, v]) => v && (
