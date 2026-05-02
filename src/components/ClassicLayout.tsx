@@ -2,6 +2,7 @@ import type { SiteConfig } from '@/lib/site-config'
 import { CTA_DEFAULT, TRUST_BADGE_LABELS } from '@/lib/site-config'
 import ContactForm from './ContactForm'
 import PhoneCTA from './PhoneCTA'
+import ServicesEmptyState from './ServicesEmptyState'
 
 export default function ClassicLayout({ config }: { config: SiteConfig }) {
   const { primary, accent } = config.brand_colors
@@ -63,7 +64,7 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
               </div>
             ))}
           </div>
-        ) : (
+        ) : config.services.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {config.services.map(s => (
               <div key={s.name} className="border border-gray-200 rounded-xl p-6">
@@ -72,6 +73,8 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
               </div>
             ))}
           </div>
+        ) : (
+          <ServicesEmptyState businessName={config.business_name} phone={config.phone} primary={config.brand_colors.primary} />
         )}
       </section>
 
