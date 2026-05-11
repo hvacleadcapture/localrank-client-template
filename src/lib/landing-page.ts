@@ -58,6 +58,10 @@ export interface PublicLandingPage {
     email: string | null
     website_url: string | null
     favicon_url: string | null
+    // Build #20: site-config-level brand assets, used for header logo and as
+    // a hero fallback when a per-LP hero_image isn't set.
+    logo_url: string | null
+    hero_image_url: string | null
     brand_colors: { primary: string; accent: string; secondary?: string }
     why_choose_us: string[]
     hours_of_operation: { weekdays?: string; saturday?: string; sunday?: string; emergency?: string } | null

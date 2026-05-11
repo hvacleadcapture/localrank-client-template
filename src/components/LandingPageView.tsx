@@ -74,9 +74,18 @@ export async function LandingPageView({
 
       <header className="border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-5 py-3.5 flex items-center justify-between gap-3">
-          <div className="font-bold text-base sm:text-lg truncate" style={{ color: primary }}>
-            {lp.business.name}
-          </div>
+          {lp.business.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={lp.business.logo_url}
+              alt={lp.business.name}
+              className="h-9 sm:h-10 w-auto object-contain"
+            />
+          ) : (
+            <div className="font-bold text-base sm:text-lg truncate" style={{ color: primary }}>
+              {lp.business.name}
+            </div>
+          )}
           <PhoneLink
             lp={lp}
             source="header"
@@ -143,20 +152,29 @@ export async function LandingPageView({
           </div>
 
           <div className="order-first lg:order-last">
-            {lp.hero_image ? (
-              <img
-                src={lp.hero_image}
-                alt={`${lp.service} — ${lp.business.name}`}
-                className="w-full h-56 sm:h-80 lg:h-[420px] object-cover rounded-2xl shadow-md"
-              />
-            ) : (
-              <div
-                className="w-full h-56 sm:h-80 lg:h-[420px] rounded-2xl shadow-md flex items-center justify-center text-white text-2xl font-bold"
-                style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}
-              >
-                {lp.business.name}
-              </div>
-            )}
+            {(() => {
+              // Per-LP hero wins; falls back to the site-config hero pushed
+              // in by LRP's tailor wizard; finally to the gradient block.
+              const heroSrc = lp.hero_image ?? lp.business.hero_image_url ?? null
+              if (heroSrc) {
+                return (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={heroSrc}
+                    alt={`${lp.service} — ${lp.business.name}`}
+                    className="w-full h-56 sm:h-80 lg:h-[420px] object-cover rounded-2xl shadow-md"
+                  />
+                )
+              }
+              return (
+                <div
+                  className="w-full h-56 sm:h-80 lg:h-[420px] rounded-2xl shadow-md flex items-center justify-center text-white text-2xl font-bold"
+                  style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}
+                >
+                  {lp.business.name}
+                </div>
+              )
+            })()}
           </div>
         </div>
       </section>

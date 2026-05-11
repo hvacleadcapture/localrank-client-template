@@ -68,6 +68,12 @@ export interface SiteConfig {
   license_numbers?: string
   favicon_url?: string | null
   schema_jsonld?: string
+
+  // Build #20: header logo + hero photo, both pushed in by LRP from the
+  // tailor wizard. When present, layouts render <img>; when null, layouts
+  // fall back to text/gradient as before.
+  logo_url?: string | null
+  hero_image_url?: string | null
 }
 
 export type TemplateVariant = 'classic' | 'modern' | 'bold'

@@ -23,9 +23,16 @@ export default function BoldLayout({ config }: { config: SiteConfig }) {
       )}
       <header style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} className="border-b border-white/10 backdrop-blur sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div>
-            <p className="font-black tracking-tight uppercase leading-none">{config.business_name}</p>
-            {config.tagline && <p className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{config.tagline}</p>}
+          <div className="flex items-center gap-3">
+            {config.logo_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={config.logo_url} alt={config.business_name} className="h-10 w-auto bg-white/95 rounded p-1.5" />
+            ) : (
+              <div>
+                <p className="font-black tracking-tight uppercase leading-none">{config.business_name}</p>
+                {config.tagline && <p className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{config.tagline}</p>}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-5">
             <a href="/blog" className="text-xs font-black uppercase tracking-widest text-white/80 hover:text-white">Tips & Guides</a>
@@ -38,7 +45,14 @@ export default function BoldLayout({ config }: { config: SiteConfig }) {
         </div>
       </header>
 
-      <section className="relative overflow-hidden" style={{ backgroundImage: `linear-gradient(135deg, ${primary} 0%, #000 100%)` }}>
+      <section
+        className="relative overflow-hidden"
+        style={
+          config.hero_image_url
+            ? { backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%), url("${config.hero_image_url}")`, backgroundSize: 'cover', backgroundPosition: 'center' }
+            : { backgroundImage: `linear-gradient(135deg, ${primary} 0%, #000 100%)` }
+        }
+      >
         <div className="max-w-5xl mx-auto px-6 py-28 text-center">
           <p className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-full mb-6" style={{ backgroundColor: accent, color: '#000' }}>
             {config.industry} · {config.city}{config.state ? `, ${config.state}` : ''}

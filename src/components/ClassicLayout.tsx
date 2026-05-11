@@ -16,9 +16,16 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
     <main className="min-h-screen bg-white text-gray-900 antialiased">
       <header style={{ backgroundColor: primary }} className="text-white">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div>
-            <p className="font-bold text-lg leading-tight">{config.business_name}</p>
-            {config.tagline && <p className="text-xs opacity-80 mt-0.5">{config.tagline}</p>}
+          <div className="flex items-center gap-3">
+            {config.logo_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={config.logo_url} alt={config.business_name} className="h-10 w-auto bg-white/95 rounded p-1.5" />
+            ) : (
+              <div>
+                <p className="font-bold text-lg leading-tight">{config.business_name}</p>
+                {config.tagline && <p className="text-xs opacity-80 mt-0.5">{config.tagline}</p>}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-5">
             <a href="/blog" className="text-sm font-semibold text-white/90 hover:text-white">Tips & Guides</a>
@@ -27,7 +34,14 @@ export default function ClassicLayout({ config }: { config: SiteConfig }) {
         </div>
       </header>
 
-      <section style={{ backgroundColor: primary }} className="text-white">
+      <section
+        style={
+          config.hero_image_url
+            ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("${config.hero_image_url}")`, backgroundSize: 'cover', backgroundPosition: 'center' }
+            : { backgroundColor: primary }
+        }
+        className="text-white"
+      >
         <div className="max-w-4xl mx-auto px-6 py-20 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight">{config.hero_headline}</h1>
           <p className="mt-4 text-lg sm:text-xl opacity-90">{config.hero_subhead}</p>

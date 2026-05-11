@@ -16,9 +16,16 @@ export default function ModernLayout({ config }: { config: SiteConfig }) {
     <main className="min-h-screen bg-white text-gray-900 antialiased">
       <header className="border-b border-gray-100 sticky top-0 bg-white/90 backdrop-blur z-10">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div>
-            <p className="font-bold tracking-tight leading-tight">{config.business_name}</p>
-            {config.tagline && <p className="text-xs text-gray-500 mt-0.5">{config.tagline}</p>}
+          <div className="flex items-center gap-3">
+            {config.logo_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={config.logo_url} alt={config.business_name} className="h-10 w-auto" />
+            ) : (
+              <div>
+                <p className="font-bold tracking-tight leading-tight">{config.business_name}</p>
+                {config.tagline && <p className="text-xs text-gray-500 mt-0.5">{config.tagline}</p>}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-5">
             <a href="/blog" className="text-sm font-medium text-gray-700 hover:text-gray-900 tracking-tight">Tips & Guides</a>
@@ -49,7 +56,16 @@ export default function ModernLayout({ config }: { config: SiteConfig }) {
               </div>
             )}
           </div>
-          <div className="aspect-[4/3] rounded-2xl shadow-lg" style={{ backgroundImage: `linear-gradient(135deg, ${primary}, ${accent})` }} />
+          {config.hero_image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={config.hero_image_url}
+              alt={`${config.business_name} — ${config.industry}`}
+              className="aspect-[4/3] w-full object-cover rounded-2xl shadow-lg"
+            />
+          ) : (
+            <div className="aspect-[4/3] rounded-2xl shadow-lg" style={{ backgroundImage: `linear-gradient(135deg, ${primary}, ${accent})` }} />
+          )}
         </div>
       </section>
 
