@@ -1,12 +1,19 @@
 'use client'
 
-import { getApiUrl, getTenantId } from '@/lib/site-config'
+import {
+  getApiUrl,
+  getTenantId,
+  getGoogleAdsConvId,
+  getGoogleAdsPhoneLabel,
+} from '@/lib/site-config'
 
 export default function PhoneCTA({
   phone, accentColor = '#F97316', label,
 }: { phone: string; accentColor?: string; label?: string }) {
   if (!phone) return null
   const onClick = () => {
+    // Internal LRP analytics — fire and forget. Errors are swallowed so they
+    // never block the tel: navigation.
     fetch(`${getApiUrl()}/api/track/conversion`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,6 +25,20 @@ export default function PhoneCTA({
       }),
       keepalive: true,
     }).catch(() => undefined)
+
+    // Google Ads conversion — only fires when both env vars are set. Skipped
+    // entirely otherwise (no gtag script in the page either, see layout.tsx).
+    // Wrapped so a missing/blocked gtag never blocks the tel: nav above.
+    const convId = getGoogleAdsConvId()
+    const phoneLabel = getGoogleAdsPhoneLabel()
+    if (convId && phoneLabel) {
+      try {
+        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', { send_to: `${convId}/${phoneLabel}` })
+        }
+      } catch { /* swallow — phone call must still proceed */ }
+    }
   }
   return (
     <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} onClick={onClick}

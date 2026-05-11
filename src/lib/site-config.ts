@@ -109,6 +109,35 @@ export function getApiUrl(): string {
   return process.env.NEXT_PUBLIC_LOCALRANK_API_URL ?? 'https://app.hvacleadcapture.com'
 }
 
+// Build #19: each Vercel project is one of two roles. The root page reads
+// this to choose between the marketing-site layout and the LP renderer.
+export type SiteRole = 'main' | 'landing_page'
+
+export function getSiteRole(): SiteRole {
+  return process.env.NEXT_PUBLIC_SITE_ROLE === 'landing_page' ? 'landing_page' : 'main'
+}
+
+// Google Ads gtag conversion ID (formatted "AW-XXXXXXXX" by LRP at deploy
+// time). When null, the gtag script is not injected at all.
+export function getGoogleAdsConvId(): string | null {
+  const v = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONV_ID
+  return v && v.length > 0 ? v : null
+}
+
+// Phone-conversion action label. Combined with the conv id at click time as
+// `send_to: '${CONV_ID}/${LABEL}'`. When null, no conversion event fires.
+export function getGoogleAdsPhoneLabel(): string | null {
+  const v = process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_LABEL
+  return v && v.length > 0 ? v : null
+}
+
+// On LP sites, identifies which landing page to render at /. When null, the
+// LP site shows a "coming soon" placeholder.
+export function getPrimaryLpSlug(): string | null {
+  const v = process.env.NEXT_PUBLIC_PRIMARY_LP_SLUG
+  return v && v.length > 0 ? v : null
+}
+
 function fallbackConfig(): SiteConfig {
   return {
     business_name: process.env.NEXT_PUBLIC_BUSINESS_NAME ?? 'Local Business',
